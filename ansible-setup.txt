@@ -1,0 +1,59 @@
+Node - instance
+sudo yum update
+sudo hostnamectl set-hostname ansible-node1
+sudo useradd devops
+sudo passwd devops
+sudo sed -i "s/PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
+sudo systemctl restart sshd
+sudo nano /etc/sudoers.d/devops
+devops ALL = (ALL) NOPASSWD: ALL
+sudo cat /etc/sudoers.d/devops
+Do for both nodes…
+sudo hostnamectl set-hostname ansible-node2
+
+Engine - instance
+Cat /etc/*release
+sudo hostnamectl set-hostname ansible-engine
+sudo hostnamectl
+sudo yum list installed python*
+sudo amazon-linux-extras enable ansible2
+sudo yum install ansible
+ansible –version
+mkdir ansible-demo
+cd ansible-demo
+nano ansible.cfg
+[defaults]
+
+inventory = ./inventory
+
+remote_user = devops
+nano inventory
+[local]
+ansible-engine ansible_connection=local
+
+[nodes]
+node1 ansible_host=172.31.41.72
+node2 ansible_host=172.31.46.218
+sudo nano /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain 4::1         
+localhost6 localhost6.localdomain6
+
+## ansible nodes with private IP
+172.31.41.72  node1
+172.31.46.218 node2
+sudo yum install git
+ssh-keygen
+ssh-copy-id devops@node1
+ssh devops@node1
+
+Logged into the machine
+
+sudo -i
+exit
+exit
+
+Connection closed node1
+Do the same in node2
+Cd ansible-demo
+ll
+ansible all -m ping
