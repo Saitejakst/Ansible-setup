@@ -57,3 +57,16 @@ Do the same in node2
 Cd ansible-demo
 ll
 ansible all -m ping
+
+ansible playbook.yml 
+
+---
+- hosts: all
+  become: yes
+  connection: ssh
+  become_user: root
+  tasks:
+    - name: Installation of wget
+      yum:
+        name: wget
+        state: present
